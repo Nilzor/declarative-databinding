@@ -71,5 +71,7 @@ dependencies {
 configurations.all {
     resolutionStrategy {
         force 'androidx.lifecycle:lifecycle-viewmodel:2.4.0'
+        force 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+        force 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     }
 }
