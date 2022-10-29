@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="no.nilsen.compose.TestVm" />
+            type="no.nilsen.compose.UserVersusDataChangeExample" />
     </data>
 
     <LinearLayout
@@ -16,9 +16,18 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:hint="Enter some text"
+            android:minWidth="200dp"
 
             android:text="@{viewModel.text}"
             android:afterTextChanged="@{viewModel::afterTextChanged}"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click to set UUID"
+            android:onClick="@{viewModel::setUuid}"
+            />
 
     </LinearLayout>
 </layout>
