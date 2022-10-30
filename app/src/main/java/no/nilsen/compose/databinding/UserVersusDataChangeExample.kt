@@ -1,11 +1,11 @@
-package no.nilsen.compose
+package no.nilsen.compose.databinding
 
 import android.text.Editable
 import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import java.util.UUID
+import java.util.*
 
 /**
  * Illustrating that we get an afterTextChanged both when data is set

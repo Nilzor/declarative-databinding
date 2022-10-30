@@ -6,28 +6,44 @@
     <data>
         <variable
             name="viewModel"
-            type="no.nilsen.compose.UserVersusDataChangeExample" />
+            type="no.nilsen.compose.databinding.ShoppingCartViewModelDatabinding" />
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".DataBindingActivity">
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Enter some text"
-            android:minWidth="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
 
-            android:text="@{viewModel.text}"
-            android:afterTextChanged="@{viewModel::afterTextChanged}"/>
-
-        <Button
-            android:layout_width="wrap_content"
+        <ListView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Click to set UUID"
-            android:onClick="@{viewModel::setUuid}"
+            app:items="@{viewModel.stateFlow.productList}"
+            app:itemBinding="@{viewModel.itemBinding}"
+            tools:listitem="@layout/view_product"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".databinding.DataBindingActivity">
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total count:"/>
+
+            <TextView
+                android:layout_width="23dp"
+                android:layout_height="match_parent"
+                app:textInt="@{viewModel.stateFlow.totalProductCount}"
+                android:textColor="#222"
+                android:textSize="22sp"
+                tools:text="0" />
+        </LinearLayout>
     </LinearLayout>
+
 </layout>

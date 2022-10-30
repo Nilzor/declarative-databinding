@@ -1,4 +1,4 @@
-package no.nilsen.compose
+package no.nilsen.compose.compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import no.nilsen.compose.common.ShoppingCartViewModel
 import no.nilsen.compose.ui.theme.ComposeTestingTheme
 
 class ComposeActivity : ComponentActivity() {
@@ -41,12 +43,15 @@ fun Page(viewModel: ShoppingCartViewModel) {
 
     Column(modifier = Modifier
         .fillMaxWidth()
+        .padding(8.dp)
     ) {
         for (product in pageState.value.productList) {
             Row {
-                Text(product.name, modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(8.dp)
+                Text(product.name,
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .requiredWidth(110.dp)
                 )
                 Counter(
                     product.count,
@@ -55,7 +60,8 @@ fun Page(viewModel: ShoppingCartViewModel) {
                 )
            }
         }
-        Text("Total count: ${pageState.value.totalProductCount}")
+        Text("Total count: ${pageState.value.totalProductCount}",
+            fontSize = 22.sp)
     }
 }
 
@@ -64,7 +70,7 @@ fun Counter(value: Int, onIncreaseClick: () -> Unit, onDecreaseClick: () -> Unit
     Row {
         Button(
             onClick = onDecreaseClick,
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue, contentColor = Color.White),
+            colors = ButtonDefaults.buttonColors(contentColor = Color.White),
         ) {
             Text(text = "-")
         }
@@ -72,12 +78,12 @@ fun Counter(value: Int, onIncreaseClick: () -> Unit, onDecreaseClick: () -> Unit
             text = value.toString(),
             modifier = Modifier
                 .align(alignment = Alignment.CenterVertically)
-                .padding(PaddingValues(all = 4.dp)),
+                .padding(PaddingValues(horizontal = 8.dp)),
             textAlign = TextAlign.Center,
         )
         Button(
             onClick = onIncreaseClick,
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue, contentColor = Color.White),
+            colors = ButtonDefaults.buttonColors(contentColor = Color.White),
         ) {
             Text(text = "+")
         }

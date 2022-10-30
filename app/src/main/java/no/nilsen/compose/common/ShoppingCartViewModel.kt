@@ -1,9 +1,9 @@
-package no.nilsen.compose
+package no.nilsen.compose.common
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ShoppingCartViewModel : ViewModel() {
+open class ShoppingCartViewModel : ViewModel() {
     private var currentState: PageState = PageState(
         productList = listOf(
             ProductCounterState("Voksen", 0),
