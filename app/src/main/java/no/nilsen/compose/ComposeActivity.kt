@@ -6,7 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import no.nilsen.compose.ui.theme.ComposeTestingTheme
 
 class ComposeActivity : ComponentActivity() {
-    val viewModel: CompViewModel by viewModels<CompViewModel>()
+    val viewModel: ShoppingCartViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,32 +25,58 @@ class ComposeActivity : ComponentActivity() {
             ComposeTestingTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Counter(viewModel)
+                    Page(viewModel)
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun Counter(viewModel: CompViewModel) {
-    val state = viewModel.stateFlow.collectAsState()
+fun Page(viewModel: ShoppingCartViewModel) {
+    val pageState = viewModel.stateFlow.collectAsState()
+
+    // Todo: Grid / LazyVerticalGrid
+
+    Column(modifier = Modifier
+        .fillMaxWidth()
+    ) {
+        for (product in pageState.value.productList) {
+            Row {
+                Text(product.name, modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(8.dp)
+                )
+                Counter(
+                    product.count,
+                    { viewModel.increaseCounter(product) },
+                    { viewModel.decreaseCounter(product) },
+                )
+           }
+        }
+        Text("Total count: ${pageState.value.totalProductCount}")
+    }
+}
+
+@Composable
+fun Counter(value: Int, onIncreaseClick: () -> Unit, onDecreaseClick: () -> Unit) {
     Row {
         Button(
-            onClick = viewModel::decreaseCounter,
+            onClick = onDecreaseClick,
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue, contentColor = Color.White),
         ) {
             Text(text = "-")
         }
         Text(
-            text = state.value.count.toString(),
+            text = value.toString(),
             modifier = Modifier
                 .align(alignment = Alignment.CenterVertically)
                 .padding(PaddingValues(all = 4.dp)),
             textAlign = TextAlign.Center,
         )
         Button(
-            onClick = viewModel::increaseCounter,
+            onClick = onIncreaseClick,
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue, contentColor = Color.White),
         ) {
             Text(text = "+")
@@ -61,7 +88,8 @@ fun Counter(viewModel: CompViewModel) {
 fun MyContent() {
     ComposeTestingTheme {
         Surface( color = MaterialTheme.colors.background) {
-            Counter(CompViewModel())
+            Page(ShoppingCartViewModel())
+            //displayList()
         }
     }
 }
