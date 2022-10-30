@@ -55,6 +55,7 @@ fun Page(viewModel: ShoppingCartViewModel) {
                 )
                 Counter(
                     product.count,
+                    product.enableDecrease,
                     { viewModel.increaseCounter(product) },
                     { viewModel.decreaseCounter(product) },
                 )
@@ -66,11 +67,16 @@ fun Page(viewModel: ShoppingCartViewModel) {
 }
 
 @Composable
-fun Counter(value: Int, onIncreaseClick: () -> Unit, onDecreaseClick: () -> Unit) {
+fun Counter(value: Int,
+            enableDecrease: Boolean,
+            onIncreaseClick: () -> Unit,
+            onDecreaseClick: () -> Unit,
+) {
     Row {
         Button(
             onClick = onDecreaseClick,
             colors = ButtonDefaults.buttonColors(contentColor = Color.White),
+            enabled = enableDecrease,
         ) {
             Text(text = "-")
         }

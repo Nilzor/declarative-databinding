@@ -10,6 +10,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/product_item_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -27,6 +28,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="decreaseCounter"
+            android:enabled="@{viewModel.enableDecrease}"
             android:text="-" />
 
         <TextView
@@ -42,6 +45,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="increaseCounter"
             android:text="+" />
 
     </LinearLayout>

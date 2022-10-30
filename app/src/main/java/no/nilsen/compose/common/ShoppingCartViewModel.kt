@@ -20,7 +20,11 @@ open class ShoppingCartViewModel : ViewModel() {
         val totalProductCount: Int = 0,
     )
 
-    data class ProductCounterState(val name: String, val count: Int)
+    data class ProductCounterState(
+        val name: String,
+        val count: Int,
+        val enableDecrease: Boolean = false,
+    )
 
     fun increaseCounter(state: ProductCounterState) {
         modifyCount(state, +1)
@@ -34,7 +38,10 @@ open class ShoppingCartViewModel : ViewModel() {
 
     private fun modifyCount(state: ProductCounterState, delta: Int) {
         val newProductList = currentState.productList.map {
-            if (it == state) it.copy(count = it.count + delta)
+            if (it == state) {
+                val newCount = it.count + delta
+                it.copy(count = newCount, enableDecrease = newCount > 0)
+            }
             else it
         }
         setState(
