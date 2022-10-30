@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 open class ShoppingCartViewModel : ViewModel() {
     private var currentState: PageState = PageState(
         productList = listOf(
-            ProductCounterState("Voksen", 0),
-            ProductCounterState("Barn", 0),
-            ProductCounterState("Honnør", 0),
+            ProductCounterState("Adult", 0),
+            ProductCounterState("Child", 0),
+            ProductCounterState("Bicycle", 0),
         ),
         totalProductCount = 0
     )
