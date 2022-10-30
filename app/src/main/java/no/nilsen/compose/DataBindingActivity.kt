@@ -10,6 +10,5 @@ class DataBindingActivity : AppCompatActivity() {
         val binding = ActivityDataBindingBinding.inflate(layoutInflater)
         binding.viewModel = UserVersusDataChangeExample()
         setContentView(binding.root)
-
     }
 }

@@ -4,18 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.onEach
+import androidx.compose.ui.unit.dp
 import no.nilsen.compose.ui.theme.ComposeTestingTheme
 
 class ComposeActivity : ComponentActivity() {
@@ -26,7 +23,7 @@ class ComposeActivity : ComponentActivity() {
         setContent {
             ComposeTestingTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                Surface(color = MaterialTheme.colors.background) {
                     Counter(viewModel)
                 }
             }
@@ -38,14 +35,27 @@ class ComposeActivity : ComponentActivity() {
 fun Counter(viewModel: CompViewModel) {
     val state = viewModel.stateFlow.collectAsState()
     Row {
-        Text("Count: ${state.value.count}")
-        Button(onClick = viewModel::increaseCounter
-        , colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)) {
-            Text(text = "Inc")
+        Button(
+            onClick = viewModel::decreaseCounter,
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue, contentColor = Color.White),
+        ) {
+            Text(text = "-")
+        }
+        Text(
+            text = state.value.count.toString(),
+            modifier = Modifier
+                .align(alignment = Alignment.CenterVertically)
+                .padding(PaddingValues(all = 4.dp)),
+            textAlign = TextAlign.Center,
+        )
+        Button(
+            onClick = viewModel::increaseCounter,
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue, contentColor = Color.White),
+        ) {
+            Text(text = "+")
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun MyContent() {
