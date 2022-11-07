@@ -1,19 +1,7 @@
 package no.nilsen.compose.common
 
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-
-open class ShoppingCartViewModel : ViewModel() {
-    private var currentState: PageState = PageState(
-        productList = listOf(
-            ProductCounterState("Adult", 0),
-            ProductCounterState("Child", 0),
-            ProductCounterState("Bicycle", 0),
-        ),
-        totalProductCount = 0
-    )
-
-    val stateFlow = MutableStateFlow(currentState)
+open class ShoppingCartViewModel : HistoryViewModel<ShoppingCartViewModel.PageState>() {
+    override val initialState: PageState = ShoppingCartStartState.state
 
     data class PageState(
         val productList: List<ProductCounterState>,
@@ -37,7 +25,7 @@ open class ShoppingCartViewModel : ViewModel() {
     }
 
     private fun modifyCount(state: ProductCounterState, delta: Int) {
-        val newProductList = currentState.productList.map {
+        val newProductList = stateFlow.value.productList.map {
             if (it == state) {
                 val newCount = it.count + delta
                 it.copy(count = newCount, enableDecrease = newCount > 0)
@@ -47,13 +35,8 @@ open class ShoppingCartViewModel : ViewModel() {
         setState(
             PageState(
                 productList = newProductList,
-                totalProductCount = currentState.totalProductCount + delta
+                totalProductCount = stateFlow.value.totalProductCount + delta
             )
         )
-    }
-
-    private fun setState(newState: PageState) {
-        currentState = newState
-        stateFlow.value = newState
     }
 }

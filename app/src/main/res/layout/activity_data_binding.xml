@@ -8,43 +8,72 @@
             name="viewModel"
             type="no.nilsen.compose.databinding.ShoppingCartViewModelDatabinding" />
     </data>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        >
-
-        <ListView
-            android:id="@+id/products_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:items="@{viewModel.observableModel.productList}"
-            app:itemBinding="@{viewModel.itemBinding}"
-            tools:listitem="@layout/view_product"
-            />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".databinding.DataBindingActivity">
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
 
-            <TextView
-                android:textSize="18sp"
-                android:layout_marginHorizontal="8dp"
+            <ListView
+                android:id="@+id/products_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:items="@{viewModel.observableModel.productList}"
+                app:itemBinding="@{viewModel.itemBinding}"
+                tools:listitem="@layout/view_product"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".databinding.DataBindingActivity">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total count:"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:textInt="@{viewModel.observableModel.totalProductCount}"
+                    android:textColor="#222"
+                    android:textSize="22sp"
+                    tools:text="0" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_margin="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total count:"/>
-
-            <TextView
+                android:enabled="@{viewModel.canGoBack}"
+                app:onClick="@{viewModel::goBack}"
+                android:text="&lt;-"
+                />
+            <Button
+                android:layout_margin="8dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:textInt="@{viewModel.observableModel.totalProductCount}"
-                android:textColor="#222"
-                android:textSize="22sp"
-                tools:text="0" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_height="wrap_content"
+                android:enabled="@{viewModel.canGoForward}"
+                app:onClick="@{viewModel::goForward}"
+                android:text="-&gt;"
+                />
 
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
 </layout>
