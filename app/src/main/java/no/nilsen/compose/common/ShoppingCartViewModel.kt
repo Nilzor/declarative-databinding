@@ -25,7 +25,8 @@ open class ShoppingCartViewModel : HistoryViewModel<ShoppingCartViewModel.PageSt
     }
 
     private fun modifyCount(state: ProductCounterState, delta: Int) {
-        val newProductList = stateFlow.value.productList.map {
+        val curState = stateFlow.value
+        val newProductList = curState.productList.map {
             if (it == state) {
                 val newCount = it.count + delta
                 it.copy(count = newCount, enableDecrease = newCount > 0)
@@ -35,7 +36,7 @@ open class ShoppingCartViewModel : HistoryViewModel<ShoppingCartViewModel.PageSt
         setState(
             PageState(
                 productList = newProductList,
-                totalProductCount = stateFlow.value.totalProductCount + delta
+                totalProductCount = curState.totalProductCount + delta
             )
         )
     }
