@@ -95,13 +95,23 @@ fun Counter(value: Int,
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun MyContent() {
     ComposeTestingTheme {
         Surface( color = MaterialTheme.colors.background) {
+            Counter(1, false, {} , {})
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PagePreview() {
+    ComposeTestingTheme {
+        Surface( color = MaterialTheme.colors.background) {
             Page(ShoppingCartViewModel())
-            //displayList()
         }
     }
 }
